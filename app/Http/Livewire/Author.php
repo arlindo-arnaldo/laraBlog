@@ -12,9 +12,10 @@ use Livewire\WithPagination;
 class Author extends Component
 {
     use WithPagination;
-    public $name, $email, $username, $author_type, $direct_publisher;
+    public $author_id,$name, $email, $username, $author_type, $direct_publisher, $blocked;
     public $author, $per_page = 4;
     public $search;
+
     protected $listeners = [
         'resetForms',
     ];
@@ -49,6 +50,7 @@ class Author extends Component
         $this->author->type = $this->author_type;
         $this->author->direct_publish = $this->direct_publisher;
         if($this->author->save()){
+
             info('Salvo com sucesso!');
             info('Email: '.$this->email);
             info('Password: '.$default_password);
@@ -57,9 +59,35 @@ class Author extends Component
             $this->dispatchBrowserEvent('hide_add_author_modal');
             $this->dispatchBrowserEvent('show_success_modal');
         }
-        
-
-
+    }
+    public function editAuthor($author){
+        $this->author_id = $author['id'];
+        $this->name = $author['name'];
+        $this->email = $author['email'];
+        $this->username = $author['username'];
+        $this->author_type = $author['type'];
+        $this->direct_publisher = $author['direct_publish'];
+        $this->blocked = $author['blocked'];
+        $this->dispatchBrowserEvent('show_edit_author_modal');
+    }
+    public function updateAuthor(){
+        $this->validate([
+            'name' =>'required',
+            'email' => 'required|email|unique:users,email,'.$this->author_id,
+            'username' => 'required|min:6|max:20|unique:users,username,'.$this->author_id,
+        ]);
+        if($this->author_id){
+            $author = User::find($this->author_id);
+            $author->update([
+                'name' => $this->name,
+                'username' => $this->username,
+                'email' => $this->email,
+                'type' => $this->author_type,
+                'direct_publish' => $this->direct_publisher,
+                'blocked' => $this->blocked
+            ]);
+            $this->dispatchBrowserEvent('hide_edit_author_modal');
+        }
     }
     public function render()
     {

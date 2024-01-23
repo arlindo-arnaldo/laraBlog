@@ -20,10 +20,10 @@ class AuthorLoginForm extends Component
            'email' => 'required|email|exists:users,email',
            'password' => 'required|min:3'
         ],[
-            'email.required' => 'Enter your email address',
-            'email.email' => 'This email is not valid',
-            'email.exists' => 'This email does not exist in the database',
-            'password.required' => 'Enter your password'
+            'email.required' => 'Insira seu email',
+            'email.email' => 'Este email é invalido',
+            'email.exists' => 'O email não existe na base de dados',
+            'password.required' => 'Insira uma senha'
         ]);
             
         $creds = array('email' => $this->email, 'password' => $this->password);
@@ -32,7 +32,7 @@ class AuthorLoginForm extends Component
             $checkUser = User::where('email', $this->email)->first();
             if ($checkUser->blocked == 1) {
                 Auth::guard('web')->logout();
-                return redirect()->route('author.login')->with('fail', 'Your  account had been blocked');
+                return redirect()->route('author.login')->with('fail', 'Sua conta encontra-se bloqueada');
             }else{
                 if ($this->returnUrl !=null) {
                     info(auth()->user()->name.' Fez o login');
@@ -43,7 +43,7 @@ class AuthorLoginForm extends Component
                 
             }
         }else{
-            session()->flash('fail', 'Incorrect email or password');
+            session()->flash('fail', 'Email ou senha Incorrecto');
         }
     }
     public function render()

@@ -21,5 +21,12 @@
         window.addEventListener('show_success_modal', function(){
            alert("Autor adicionado com sucesso");
         });
+        window.addEventListener('show_edit_author_modal', function(){
+            $('#modal-edit-author').modal('show');
+        });
+        window.addEventListener('hide_edit_author_modal', function(){
+            $('#modal-edit-author').modal('hide');
+            alert('Autor Actualizado');
+        });
     </script>
 @endpush

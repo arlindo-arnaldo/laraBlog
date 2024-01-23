@@ -25,9 +25,10 @@ class AuthorChangePassword extends Component
 
         ],
     [
-        'current_password.required' => 'Enter your Current Password',
-        'new_password.required' => 'Enter your new password',
-        'confirm_password.same' => 'The confirm password must be equal to the new password'
+        'current_password.required' => 'Insira a sua senha actual',
+        'new_password.required' => 'Introduza a senha nova',
+        'confirm_password.required' => 'Confirme a nova senha',
+        'confirm_password.same' => 'Esta senha deve ser igual a nova senha'
     ]);
 
     if(User::find(auth('web')->id())->update(['password' => Hash::make($this->new_password)])){

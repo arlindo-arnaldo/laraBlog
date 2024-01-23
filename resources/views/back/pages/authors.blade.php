@@ -10,7 +10,9 @@
 @push('scripts')
     <script>
 
-    
+        $(document).ready(function(){
+            
+        });
 
         $(window).on('hidden.bs.modal', function(){
             Livewire.emit('resetForms')
@@ -28,5 +30,12 @@
             $('#modal-edit-author').modal('hide');
             alert('Autor Actualizado');
         });
+        window.addEventListener('show_delete_confirm_modal', function(){
+            $('#modal-danger').modal('show');
+        });
+        window.addEventListener('hide_delete_confirm_modal', function(){
+            $('#modal-danger').modal('show');
+        });
+
     </script>
 @endpush

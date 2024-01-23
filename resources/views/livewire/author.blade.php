@@ -37,11 +37,11 @@
           </div>
           <div class="d-flex">
             <a href="#" wire:click.prevent="editAuthor({{$author}})" class="card-btn"><!-- Download SVG icon from http://tabler-icons.io/i/mail -->
-              <svg xmlns="http://www.w3.org/2000/svg" class="icon me-2 text-muted" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"></path><path d="M3 7a2 2 0 0 1 2 -2h14a2 2 0 0 1 2 2v10a2 2 0 0 1 -2 2h-14a2 2 0 0 1 -2 -2v-10z"></path><path d="M3 7l9 6l9 -6"></path></svg>
+              
               Editar</a>
-            <a href="#" class="card-btn"><!-- Download SVG icon from http://tabler-icons.io/i/phone -->
-              <svg xmlns="http://www.w3.org/2000/svg" class="icon me-2 text-muted" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"></path><path d="M5 4h4l2 5l-2.5 1.5a11 11 0 0 0 5 5l1.5 -2.5l5 2v4a2 2 0 0 1 -2 2a16 16 0 0 1 -15 -15a2 2 0 0 1 2 -2"></path></svg>
-              Call</a>
+            <a href="#" class="card-btn" wire:click.prevent="showDeleteModal({{$author}})"><!-- Download SVG icon from http://tabler-icons.io/i/phone -->
+              
+              Deletar</a>
           </div>
         </div>
       </div>
@@ -207,5 +207,42 @@
           </div>
         </div>
       </div> <!--end update author modal-->
+
+
+      <!--Modal Danger-->
+
+      <div class="modal modal-blur fade" id="modal-danger" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog modal-sm modal-dialog-centered" role="document">
+          <div class="modal-content">
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            <div class="modal-status bg-danger"></div>
+            <div class="modal-body text-center py-4">
+              <!-- Download SVG icon from http://tabler-icons.io/i/alert-triangle -->
+              <svg xmlns="http://www.w3.org/2000/svg" class="icon mb-2 text-danger icon-lg" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M10.24 3.957l-8.422 14.06a1.989 1.989 0 0 0 1.7 2.983h16.845a1.989 1.989 0 0 0 1.7 -2.983l-8.423 -14.06a1.989 1.989 0 0 0 -3.4 0z" /><path d="M12 9v4" /><path d="M12 17h.01" /></svg>
+              <h3>Você tem a certeza?</h3>
+              <div class="text-muted">Você realmente quer eliminar este usuário? O que for feito não pode ser desfeito</div>
+            </div>
+            <div class="modal-footer">
+              <div class="w-100">
+                <div class="row">
+                  <div class="col"><a href="#" class="btn w-100" data-bs-dismiss="modal">
+                      Cancelar
+                    </a></div>
+                  <div class="col">
+                    <form action="" wire:submit.prevent="deleteAuthorAction()">
+                      <input type="hidden" wire:model="author">
+                      <button  class="btn btn-danger w-100">
+                        Deletar
+                      </button>
+                    </form>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!--Modal Danger-->
 
 </div>

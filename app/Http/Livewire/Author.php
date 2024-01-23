@@ -8,6 +8,7 @@ use Livewire\Component;
 use Nette\Utils\Random;
 use Illuminate\Support\Facades\Hash;
 use Livewire\WithPagination;
+use Illuminate\Support\Facades\File;
 
 class Author extends Component
 {
@@ -18,6 +19,7 @@ class Author extends Component
 
     protected $listeners = [
         'resetForms',
+        'deleteAuthorAction'
     ];
     public function mount(){
         $this->resetPage();
@@ -89,6 +91,31 @@ class Author extends Component
             $this->dispatchBrowserEvent('hide_edit_author_modal');
         }
     }
+    public function showDeleteModal($author){
+        $this->author = $author['id'];
+        $this->dispatchBrowserEvent('show_delete_confirm_modal');
+        
+    }
+    public function deleteAuthorAction(){
+        //$this->author = $this->showDeleteModal($author);
+        $author = User::find($this->author);    
+       $path = 'back/dist/img/authors/';
+       $picture = $author->picture;
+       $file_path = $path.explode('/', $picture)[7];
+       
+       $email = $author->email;
+       if ($file_path != null && File::exists(public_path($file_path))) {
+            if($file_path != $path.'default-img.png'){
+                File::delete(public_path($file_path));
+                info('Deletando Foto de '.$author->email);
+            }
+        }
+        $author->delete();
+        info('Autor '.$email.' deletato...');
+        info('---------------------------');
+        $this->dispatchBrowserEvent('hide_delete_confirm_modal');
+    }
+    
     public function render()
     {
         return view('livewire.author', ['authors' => User::search(trim($this->search))->where('id', '!=', auth()->user()->id)->paginate($this->per_page)]);

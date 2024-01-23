@@ -22,7 +22,6 @@ class AuthorChangePassword extends Component
         ],
         'new_password' => 'required|min:5|max:25',
         'confirm_password' => 'required|same:new_password'
-
         ],
     [
         'current_password.required' => 'Insira a sua senha actual',

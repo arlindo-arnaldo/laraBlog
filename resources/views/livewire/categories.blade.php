@@ -26,17 +26,20 @@
                             </tr>
                           </thead>
                           <tbody>
+                            @forelse ($categories as $category)
+                                
+                           
                             <tr>
                               <td data-label="Name">
                                 <div class="d-flex py-1 align-items-center">
                                   <div class="flex-fill">
-                                    <div class="font-weight-medium">Thatcher Keel</div>
+                                    <div class="font-weight-medium">{{$category->category_name}}</div>
                                   </div>
                                 </div>
                               </td>
                               <td data-label="Title">
                                 
-                                <div class="text-muted">6</div>
+                                <div class="text-muted">{{$category->subcategories->count()}}</div>
                               </td>         
                               <td>
                                   <div >
@@ -44,23 +47,34 @@
                                       <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"></path><path d="M12 12m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0"></path><path d="M12 19m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0"></path><path d="M12 5m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0"></path></svg>
                                     </a>
                                     <div class="dropdown-menu dropdown-menu-end" style="">
-                                      <a class="dropdown-item" href="#">Editar</a>
+                                      <a class="dropdown-item" href="#" wire:click.prevent="editCategory({{$category}})">Editar</a>
                                       <a class="dropdown-item text-danger" href="#">Deletar</a>
                                     </div>
                                   </div>
                                 </div>
                               </td>
                             </tr>
+                            @empty
+                               <div class="ml-4">
+                                <span class="text-danger mt-4">Nenhuma categoria salva!</span> 
+                               </div>
+                            @endforelse
 
                           </tbody>
                         </table>
                         <!--Add or Update Category Modal-->
-                        <div wire:ignone.self class="modal modal-blur fade" id="category-modal" tabindex="-1" role="dialog" aria-hidden="true" data-bs-backdrop="static">
+                        <div wire:ignore.self class="modal modal-blur fade" id="category-modal" tabindex="-1" role="dialog" aria-hidden="true" data-bs-backdrop="static">
                             <div class="modal-dialog modal-sm modal-dialog-centered" role="document">
                               <div class="modal-content">
-                                <form wire:submit.prevent="addCategory()">
+                                <div class="modal-header">
+                                  <div class="modal-title">{{$updateCategoryMode ? 'Actualizar categoria' :'Adicionar categoria'}}</div>
+                                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                </div>
+                                <form wire:submit.prevent="{{$updateCategoryMode ? 'updateCategory()' : 'addCategory()'}}">
                                 <div class="modal-body">
-                                  <div class="modal-title">Adicionar Categoria</div>
+                                  @if ($updateCategoryMode)
+                                      <input type="hidden" wire:modal="selected_category_id">
+                                  @endif
                                   <div class="mb-3">
                                     <label for="category_name" class="form-label">Nome da categoria</label>
                                     <input type="text" class="form-control" placeholder="Introduza o nome da sua categoria" wire:model="category_name" id="category_name">
@@ -69,9 +83,11 @@
                                 </div>
                                 <div class="modal-footer">
                                   <a class="btn  link-secondary me-auto" data-bs-dismiss="modal">Cancelar</a>
-                                  <button type="submit" class="btn btn-primary">Salvar</button>
-                                </div>
+                                  <button type="submit" class="btn btn-primary">{{$updateCategoryMode ? 'Actualizar' : 'Salvar'}}</button>
+                                
                                 </form>
+                                </div>
+                               
                               </div>
                             </div>
                           </div>
@@ -151,8 +167,12 @@
                 <div class="modal-dialog modal-sm modal-dialog-centered" role="document">
                   <div class="modal-content">
                     <form wire:submit.prevent="addSubCategory()">
+                      <div class="modal-header">
+                        <div class="modal-title">Adicionar sub-categoria</div>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                      </div>
                         <div class="modal-body">
-                            <div class="modal-title">Adicionar sub-categoria</div>
+                            
                             <div class="mb-3">
                                 <label for="parent_category" class="form-label"> Categoria Mãe </label>
                                 <select class="form-select" id="parent_category">
@@ -160,7 +180,7 @@
                                 </select>
                             </div>
                             <div class="mb-3">
-                                <label for="subcategory_name" class="form-label">Nome da sub-categorua</label>
+                                <label for="subcategory_name" class="form-label">Nome da sub-categoria</label>
                                 <input type="text" class="form-control" placeholder="Introduza o nome da sua sub-categoria" wire:model="subcategory_name" id="subcategory_name">
                                 <span class="text-danger">@error('subcategory_name'){{{$message}}}@enderror</span>
                             </div>

@@ -10,6 +10,14 @@
 @endsection
 @push('scripts')
 <script>
-    ;
+    window.addEventListener('hide_category_modal', function(){
+        $('#category-modal').modal('hide');
+    });
+    window.addEventListener('show_category_modal', function(){
+        $('#category-modal').modal('show');
+    });
+    $(window).on('hidden.bs.modal', function(){
+        Livewire.emit('DisbleUpdateCategoryMode');
+    });
 </script>
 @endpush

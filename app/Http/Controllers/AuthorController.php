@@ -15,7 +15,9 @@ class AuthorController extends Controller
         return view('back.pages.home');
     }
     public function logout(){
+        $name = auth()->user()->name;
         Auth::guard('web')->logout();
+        info($name.' deslogou do sistema');
         return redirect()->route('author.login');
     }
     public function changeProfilePicture(Request $request){

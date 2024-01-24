@@ -17,7 +17,8 @@ class isAdmin
     public function handle(Request $request, Closure $next)
     {   
         if (auth()->user()->type != 1) {
-            return redirect()->route('author.home');
+            //return redirect()->route('author.home');
+            abort(403, 'Acesso Negado. Você não tem permissão para acessar esta página');
         }
         return $next($request);
     }

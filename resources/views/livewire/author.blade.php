@@ -184,7 +184,7 @@
                   </div>
                 </div>
                 <div class="row">
-                  <div class="mb-3">
+                  <div class="">
                     <div class="form-label">Blockeado ?</div>
                     <label class="form-check form-switch">
                       <input class="form-check-input" type="checkbox" wire:model="blocked" >
@@ -211,7 +211,7 @@
 
       <!--Modal Danger-->
 
-      <div class="modal modal-blur fade" id="modal-danger" tabindex="-1" role="dialog" aria-hidden="true">
+      <div class="modal modal-blur fade" id="modal-danger" tabindex="-1" role="dialog" aria-hidden="true" data-bs-backdrop="static">
         <div class="modal-dialog modal-sm modal-dialog-centered" role="document">
           <div class="modal-content">
             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>

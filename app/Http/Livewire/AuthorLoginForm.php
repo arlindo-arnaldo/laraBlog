@@ -35,10 +35,14 @@ class AuthorLoginForm extends Component
                 return redirect()->route('author.login')->with('fail', 'Sua conta encontra-se bloqueada');
             }else{
                 if ($this->returnUrl !=null) {
-                    info(auth()->user()->name.' Fez o login');
+                    
+                    info($checkUser->name.' Fez o login');
                     return redirect()->to($this->returnUrl);
+                    
                 }else {
+                    info($checkUser->name.' Fez o login');
                     return redirect()->route('author.home');
+                    
                 }
                 
             }

@@ -18,7 +18,7 @@ class CreateSubCategoriesTable extends Migration
             $table->string('subcategory_name')->nullable();
             $table->string('slug')->nullable();
             $table->integer('parent_category')->nullable();
-            $table->integer('ordering')->dault(10000);
+            $table->integer('ordering')->default(10000);
             $table->timestamps();
         });
     }

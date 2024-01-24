@@ -14,4 +14,7 @@ class SubCategory extends Model
         'parent_category',
         'ordering',
     ];
+    public function ParentCategory(){
+        return $this->belongsTo(Category::class, 'parent_category', 'id');
+    }
 }

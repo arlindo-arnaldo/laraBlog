@@ -16,8 +16,14 @@
     window.addEventListener('show_category_modal', function(){
         $('#category-modal').modal('show');
     });
+    window.addEventListener('hide_subcategory_modal', function(){
+        $('#subcategory-modal').modal('hide');
+    });
+    window.addEventListener('show_subcategory_modal', function(){
+        $('#subcategory-modal').modal('show');
+    });
     $(window).on('hidden.bs.modal', function(){
-        Livewire.emit('DisbleUpdateCategoryMode');
+        Livewire.emit('DisbleUpdateMode');
     });
 </script>
 @endpush

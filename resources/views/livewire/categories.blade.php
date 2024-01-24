@@ -30,14 +30,14 @@
                                 
                            
                             <tr>
-                              <td data-label="Name">
+                              <td data-label="Nome">
                                 <div class="d-flex py-1 align-items-center">
                                   <div class="flex-fill">
                                     <div class="font-weight-medium">{{$category->category_name}}</div>
                                   </div>
                                 </div>
                               </td>
-                              <td data-label="Title">
+                              <td data-label="Nº de Subcategorias">
                                 
                                 <div class="text-muted">{{$category->subcategories->count()}}</div>
                               </td>         
@@ -113,7 +113,6 @@
             </div>
             <div class="card-body p-0">
                 <div class="col-12">
-                    
                     <div class="table-responsive">
                       <table class="table table-vcenter table-mobile-md card-table">
                         <thead>
@@ -126,19 +125,22 @@
                           </tr>
                         </thead>
                         <tbody>
+                          @forelse ($subcategories as $subcategory)
+                              
+                         
                           <tr>
                             <td data-label="Name">
                               <div class="d-flex py-1 align-items-center">
                                 <div class="flex-fill">
-                                  <div class="font-weight-medium">Thatcher Keel</div>
+                                  <div class="font-weight-medium">{{$subcategory->subcategory_name}}</div>
                                 </div>
                               </div>
                             </td>
-                            <td data-label="Parent">
+                            <td data-label="Categoria mãe">
                               
-                              <div class="text-muted">any category</div>
+                              <div class="text-muted">{{$subcategory->ParentCategory->category_name}}</div>
                             </td>
-                            <td data-label="Title">
+                            <td data-label="Nº de posts">
                               
                                 <div class="text-muted">4</div>
                               </td>
@@ -148,14 +150,16 @@
                                     <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"></path><path d="M12 12m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0"></path><path d="M12 19m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0"></path><path d="M12 5m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0"></path></svg>
                                   </a>
                                   <div class="dropdown-menu dropdown-menu-end" style="">
-                                    <a class="dropdown-item" href="#">Editar</a>
+                                    <a class="dropdown-item" href="#" wire:click.prevent="editSubCategory({{$subcategory}})">Editar</a>
                                     <a class="dropdown-item text-danger" href="#">Deletar</a>
                                   </div>
                                 </div>
                               </div>
                             </td>
                           </tr>
-                          
+                          @empty
+                              <span class="text-danger">Nenhuma Subcategoria</span>
+                          @endforelse
                           
                         </tbody>
                       </table>
@@ -163,21 +167,30 @@
               </div>
 
               <!--Add or Update Category Modal-->
-              <div wire:ignone.self class="modal modal-blur fade" id="subcategory-modal" tabindex="-1" role="dialog" aria-hidden="true" data-bs-backdrop="static">
+              <div wire:ignore.self class="modal modal-blur fade" id="subcategory-modal" tabindex="-1" role="dialog" aria-hidden="true" data-bs-backdrop="static">
                 <div class="modal-dialog modal-sm modal-dialog-centered" role="document">
                   <div class="modal-content">
-                    <form wire:submit.prevent="addSubCategory()">
+
+                    <form wire:submit.prevent="{{$updateSubCategoryMode ? 'updateSubCategory()' : 'addSubCategory()'}}">
                       <div class="modal-header">
-                        <div class="modal-title">Adicionar sub-categoria</div>
+                        <div class="modal-title">{{$updateSubCategoryMode ? 'Actualizar sub-categoria' : 'Adicionar sub-categoria'}}</div>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                       </div>
                         <div class="modal-body">
-                            
+                          @if ($updateSubCategoryMode)
+                              <input type="hidden" wire:model="selected_subcategory_id">
+                          @endif
                             <div class="mb-3">
                                 <label for="parent_category" class="form-label"> Categoria Mãe </label>
-                                <select class="form-select" id="parent_category">
-                                    <option value="STATUS_CODE">Status code</option>
+                                <select class="form-select" id="parent_category" wire:model="parent_category">
+                                  @if (!$updateSubCategoryMode)
+                                      <option value=""> -- Não Selecionado--</option>
+                                  @endif
+                                  @foreach (\App\Models\Category::all() as $category)
+                                    <option value="{{$category->id}}">{{$category->category_name}}</option>
+                                 @endforeach
                                 </select>
+                                <span class="text-danger">@error('parent_category'){{$message}} @enderror</span>
                             </div>
                             <div class="mb-3">
                                 <label for="subcategory_name" class="form-label">Nome da sub-categoria</label>
@@ -187,7 +200,7 @@
                         </div>
                         <div class="modal-footer">
                             <a class="btn  link-secondary me-auto" data-bs-dismiss="modal">Cancelar</a>
-                            <button type="submit" class="btn btn-primary">Salvar</button>
+                            <button type="submit" class="btn btn-primary">{{$updateSubCategoryMode ? 'Actualizar' : 'Salvar'}}</button>
                         </div>
                     </form>
                   </div>

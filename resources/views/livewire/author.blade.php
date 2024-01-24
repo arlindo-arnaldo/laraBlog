@@ -189,7 +189,6 @@
                     <label class="form-check form-switch">
                       <input class="form-check-input" type="checkbox" wire:model="blocked" >
                     </label>
-                    
                   </div>
                 </div>
             </div>

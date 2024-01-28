@@ -126,10 +126,8 @@
                         </thead>
                         <tbody>
                           @forelse ($subcategories as $subcategory)
-                              
-                         
                           <tr>
-                            <td data-label="Name">
+                            <td data-label="Nome">
                               <div class="d-flex py-1 align-items-center">
                                 <div class="flex-fill">
                                   <div class="font-weight-medium">{{$subcategory->subcategory_name}}</div>
@@ -141,7 +139,6 @@
                               <div class="text-muted">{{$subcategory->ParentCategory->category_name}}</div>
                             </td>
                             <td data-label="Nº de posts">
-                              
                                 <div class="text-muted">4</div>
                               </td>
                               <td>
@@ -159,8 +156,7 @@
                           </tr>
                           @empty
                               <span class="text-danger">Nenhuma Subcategoria</span>
-                          @endforelse
-                          
+                          @endforelse 
                         </tbody>
                       </table>
                     </div>

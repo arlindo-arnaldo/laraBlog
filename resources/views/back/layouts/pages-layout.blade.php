@@ -63,7 +63,9 @@
     <!-- Libs JS -->
 	<script src="{{asset('back/dist/libs/Jquery/jquery-1.7.1.min.js')}}"></script>
 	<script src="{{asset('back/dist/libs/ijaboCropTool/ijaboCropTool.min.js')}}"></script>
-	
+		<!--TyneMCE-->
+	<script src="/back/dist/libs/tinymce/tinymce.min.js?1684106062" defer></script>
+
     <script src="/back/dist/libs/apexcharts/dist/apexcharts.min.js?1684106062" defer></script>
     <script src="/back/dist/libs/jsvectormap/dist/js/jsvectormap.min.js?1684106062" defer></script>
     <script src="/back/dist/libs/jsvectormap/dist/maps/world.js?1684106062" defer></script>

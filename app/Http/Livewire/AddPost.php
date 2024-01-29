@@ -35,7 +35,18 @@ class AddPost extends Component
             
             $uploaded = $file->storeAs($path, $new_filename, 'public');
             $post_thumbnails_path = $path.'thumbnails';
+            
+            if (!Storage::disk('public')->exists($post_thumbnails_path)) {
+                Storage::disk('public')->makeDirectory($post_thumbnails_path);
+            }
 
+            //Gera uma imagem quadrada
+            Image::make( storage_path('app/public/'.$path.$new_filename))
+                    ->fit(200, 200)
+                    ->save( storage_path('app/public/'.$path.'thumbnails/thumb_'.$new_filename));
+            Image::make( storage_path('app/public/'.$path.$new_filename))
+                    ->fit(500, 350)
+                    ->save( storage_path('app/public/'.$path.'thumbnails/resized_'.$new_filename));
             if ($uploaded) {
                 $post = new Post();
                 $post->post_title = $this->post_title;

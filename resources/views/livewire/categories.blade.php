@@ -139,7 +139,7 @@
                               <div class="text-muted">{{$subcategory->ParentCategory->category_name}}</div>
                             </td>
                             <td data-label="Nº de posts">
-                                <div class="text-muted">4</div>
+                                <div class="text-muted">{{$subcategory->posts->count()}}</div>
                               </td>
                               <td>
                                 <div >

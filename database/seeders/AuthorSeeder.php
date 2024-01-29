@@ -19,6 +19,7 @@ class AuthorSeeder extends Seeder
                 'name' => 'Arlindo',
                 'username' => 'arlindodev',
                 'email' => 'arlindo@gmail.com',
+            //password for 123
                 'password' => '$2y$10$md8OKXef5JdYETZ2zl1rhu6df82xdiMGfZcG7Vg2WKvN2AoEx4kRy',
                 'biography' => 'Esta é a minha biografia',
                 'type' => 1,
